@@ -18,7 +18,8 @@ function readPackageDefinition(baseDir) {
 module.exports = (loader, done) => {
   readPackageDefinition(loader.baseDir)
     .then((packageDefinition) => {
-      if (!packageDefinition.noflo.swagger
+      if (!packageDefinition.noflo
+        || !packageDefinition.noflo.swagger
         || Object.keys(packageDefinition.noflo.swagger).length === 0) {
         // No registered Swagger endpoints
         return Promise.resolve();
