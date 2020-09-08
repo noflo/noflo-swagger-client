@@ -108,7 +108,7 @@ function createComponent(method, definition = null) {
         (portName) => input.attached(portName).length > 0,
       );
       const waitingFor = attachedPorts.filter(
-        (portName) => input.hasData(portName),
+        (portName) => !input.hasData(portName),
       );
       if (waitingFor.length > 0) {
         return;
