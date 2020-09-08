@@ -34,5 +34,8 @@
     "eslint-plugin-mocha": "^8.0.0",
     "mocha": "^8.1.3",
     "noflo-webpack-config": "^1.1.0"
+  },
+  "noflo": {
+    "loader": "src/loader.js"
   }
 }
