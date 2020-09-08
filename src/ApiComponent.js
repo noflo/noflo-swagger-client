@@ -81,50 +81,52 @@ function createBasicComponent(method, definition) {
 }
 
 function createComponent(method, definition = null) {
-  if (!definition || !definition.parameters || !definition.parameters.length) {
-    // Definition couldn't be found, create a very simple component
-    return createBasicComponent(method, definition);
-  }
-  const c = new Component();
-  c.description = definition.summary || definition.description;
-  const portToParam = {};
-  definition.parameters.forEach((param) => {
-    const portName = slug(param.name);
-    c.inPorts.add(portName, parameterToNoFlo(param));
-    portToParam[portName] = param.name;
-  });
-  c.outPorts.add('out', {
-    // TODO: Get from JSON Schema
-    datatype: 'all',
-  });
-  c.outPorts.add('error', {
-    datatype: 'object',
-  });
-
-  return c.process((input, output) => {
-    // Check if all attached inports have data
-    const attachedPorts = Object.keys(c.inPorts.ports).filter(
-      (portName) => input.attached(portName).length > 0,
-    );
-    const waitingFor = attachedPorts.filter(
-      (portName) => input.hasData(portName),
-    );
-    if (waitingFor.length > 0) {
-      return;
+  return (metadata) => {
+    if (!definition || !definition.parameters || !definition.parameters.length) {
+      // Definition couldn't be found, create a very simple component
+      return createBasicComponent(method, definition);
     }
-    const parameters = {};
-    attachedPorts.forEach((portName) => {
-      const key = portToParam[portName];
-      const val = input.getData(portName);
-      parameters[key] = val;
+    const c = new Component();
+    c.description = definition.summary || definition.description;
+    const portToParam = {};
+    definition.parameters.forEach((param) => {
+      const portName = slug(param.name);
+      c.inPorts.add(portName, parameterToNoFlo(param));
+      portToParam[portName] = param.name;
     });
-    method(parameters)
-      .then(
-        (result) => output.sendDone({
-          out: result,
-        }),
-        (error) => output.done(error),
+    c.outPorts.add('out', {
+      // TODO: Get from JSON Schema
+      datatype: 'all',
+    });
+    c.outPorts.add('error', {
+      datatype: 'object',
+    });
+
+    return c.process((input, output) => {
+      // Check if all attached inports have data
+      const attachedPorts = Object.keys(c.inPorts.ports).filter(
+        (portName) => input.attached(portName).length > 0,
       );
+      const waitingFor = attachedPorts.filter(
+        (portName) => input.hasData(portName),
+      );
+      if (waitingFor.length > 0) {
+        return;
+      }
+      const parameters = {};
+      attachedPorts.forEach((portName) => {
+        const key = portToParam[portName];
+        const val = input.getData(portName);
+        parameters[key] = val;
+      });
+      method(parameters)
+        .then(
+          (result) => output.sendDone({
+            out: result,
+          }),
+          (error) => output.done(error),
+        );
+    });
   });
 }
 module.exports = createComponent;
