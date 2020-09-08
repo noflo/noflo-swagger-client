@@ -127,6 +127,6 @@ function createComponent(method, definition = null) {
           (error) => output.done(error),
         );
     });
-  });
+  };
 }
 module.exports = createComponent;
