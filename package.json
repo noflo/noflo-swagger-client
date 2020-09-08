@@ -1,0 +1,38 @@
+{
+  "name": "noflo-swagger-client",
+  "version": "0.1.0",
+  "description": "Generate NoFlo components from Swagger/OpenAPI definitions",
+  "main": "src/index.js",
+  "scripts": {
+    "pretest": "eslint src/*.js spec/*.js",
+    "test": "nyc mocha --require node_modules/noflo-webpack-config/inject.js spec/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noflo/noflo-swagger-client.git"
+  },
+  "keywords": [
+    "noflo",
+    "ecosystem:noflo"
+  ],
+  "author": "Henri Bergius <henri.bergius@iki.fi>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/noflo/noflo-swagger-client/issues"
+  },
+  "homepage": "https://github.com/noflo/noflo-swagger-client#readme",
+  "dependencies": {
+    "noflo": "^1.0.0",
+    "slug": "^3.3.4",
+    "swagger-client": "^3.10.12"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^7.8.1",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-mocha": "^8.0.0",
+    "mocha": "^8.1.3",
+    "noflo-webpack-config": "^1.1.0"
+  }
+}
