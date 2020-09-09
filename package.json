@@ -38,5 +38,10 @@
   },
   "noflo": {
     "loader": "src/loader.js"
+  },
+  "nyc": {
+    "include": [
+      "src/*.js"
+    ]
   }
 }
