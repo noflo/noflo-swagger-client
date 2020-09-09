@@ -30,4 +30,26 @@ describe('With PetStore example', () => {
       chai.expect(c.outPorts.error).to.be.an('object');
     });
   });
+  describe('AddPet component', () => {
+    let c;
+    it('should be possible to load', (done) => {
+      loader.load('petstore/AddPet', (err, instance) => {
+        if (err) {
+          done(err);
+          return;
+        }
+        c = instance;
+        done();
+      });
+    });
+    it('should have the expected ports', () => {
+      chai.expect(c.inPorts.id).to.be.an('object');
+      chai.expect(c.inPorts.name).to.be.an('object');
+      chai.expect(c.inPorts.category).to.be.an('object');
+      chai.expect(c.inPorts.tags).to.be.an('object');
+      chai.expect(c.inPorts.status).to.be.an('object');
+      chai.expect(c.outPorts.out).to.be.an('object');
+      chai.expect(c.outPorts.error).to.be.an('object');
+    });
+  });
 });
