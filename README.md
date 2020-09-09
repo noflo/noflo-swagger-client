@@ -28,3 +28,8 @@ This would generate a component for each [Swagger pet store](https://petstore3.s
 ## Usage as a library
 
 TODO
+
+## Changes
+
+* 0.1.0 (2020-09-09)
+  - Initial release
