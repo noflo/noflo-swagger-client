@@ -35,8 +35,9 @@ function registerComponentsForTag(loader, namespace, tag, client) {
     const definition = getDefinitionForMethod(client, tag, apiMethod);
     const implementation = client.apis[tag][apiMethod];
     const component = ApiComponent(implementation, definition);
+    const componentName = apiMethod.charAt(0).toUpperCase() + apiMethod.slice(1);
     return new Promise((resolve, reject) => {
-      loader.registerComponent(createNamespace(namespace, tag), apiMethod, component, (err) => {
+      loader.registerComponent(createNamespace(namespace, tag), componentName, component, (err) => {
         if (err) {
           reject(err);
           return;
