@@ -81,7 +81,7 @@ function createBasicComponent(method, definition) {
 }
 
 function createComponent(method, definition = null) {
-  return (metadata) => {
+  return () => {
     if (!definition || !definition.parameters || !definition.parameters.length) {
       // Definition couldn't be found, create a very simple component
       return createBasicComponent(method, definition);
