@@ -1,7 +1,7 @@
 const nock = require('nock');
 const { registerSwaggerComponents } = require('../src/index');
 
-describe('With PetStore example', () => {
+describe('With PetStore OpenAPI v3 example', () => {
   const loader = new noflo.ComponentLoader(process.cwd());
   const def = {
     url: 'https://petstore3.swagger.io/api/v3/openapi.json',
@@ -96,6 +96,46 @@ describe('With PetStore example', () => {
       chai.expect(c.inPorts.status).to.be.an('object');
       chai.expect(c.outPorts.out).to.be.an('object');
       chai.expect(c.outPorts.error).to.be.an('object');
+    });
+    describe('calling the API', () => {
+      const name = noflo.internalSocket.createSocket();
+      const category = noflo.internalSocket.createSocket();
+      const status = noflo.internalSocket.createSocket();
+      const out = noflo.internalSocket.createSocket();
+      const error = noflo.internalSocket.createSocket();
+      before(() => {
+        c.inPorts.name.attach(name);
+        c.inPorts.category.attach(category);
+        c.inPorts.status.attach(status);
+        c.outPorts.out.attach(out);
+        c.outPorts.error.attach(error);
+      });
+      after(() => {
+        c.inPorts.name.detach(name);
+        c.inPorts.category.detach(category);
+        c.inPorts.status.detach(status);
+        c.outPorts.out.detach(out);
+        c.outPorts.error.detach(error);
+        nock.cleanAll();
+      });
+      it('should make a HTTP POST', (done) => {
+        const mock = nock('https://petstore3.swagger.io')
+          .post('/api/v3/pet')
+          .reply(200);
+
+        out.on('data', (data) => {
+          chai.expect(mock.isDone());
+          chai.expect(data.status).to.equal(200);
+          done();
+        });
+        error.on('data', done);
+        name.send('Musti');
+        category.send({
+          id: 1,
+          name: 'dogs',
+        });
+        status.send('available');
+      });
     });
   });
 });
