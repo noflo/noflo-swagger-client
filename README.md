@@ -31,5 +31,7 @@ TODO
 
 ## Changes
 
+*.0.1.1 (2020-09-11)
+ - Improved test coverage
 * 0.1.0 (2020-09-09)
   - Initial release
