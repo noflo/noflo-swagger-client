@@ -33,6 +33,7 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-mocha": "^8.0.0",
     "mocha": "^8.1.3",
+    "nock": "^13.0.4",
     "noflo-webpack-config": "^1.1.0",
     "nyc": "^15.1.0"
   },
