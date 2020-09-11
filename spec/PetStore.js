@@ -1,3 +1,4 @@
+const nock = require('nock');
 const { registerSwaggerComponents } = require('../src/index');
 
 describe('With PetStore example', () => {
@@ -28,6 +29,51 @@ describe('With PetStore example', () => {
       chai.expect(c.inPorts.tags).to.be.an('object');
       chai.expect(c.outPorts.out).to.be.an('object');
       chai.expect(c.outPorts.error).to.be.an('object');
+    });
+    describe('calling the API', () => {
+      const tags = noflo.internalSocket.createSocket();
+      const out = noflo.internalSocket.createSocket();
+      const error = noflo.internalSocket.createSocket();
+      before(() => {
+        c.inPorts.tags.attach(tags);
+        c.outPorts.out.attach(out);
+        c.outPorts.error.attach(error);
+      });
+      after(() => {
+        c.inPorts.tags.detach(tags);
+        c.outPorts.out.detach(out);
+        c.outPorts.error.detach(error);
+        nock.cleanAll();
+      });
+      it('should return the query results', (done) => {
+        const outData = [
+          {
+            hello: 'World',
+          },
+        ];
+        const inTags = [
+          'foo',
+          'bar',
+        ];
+        const mock = nock('https://petstore3.swagger.io')
+          .get('/api/v3/pet/findByTags')
+          .query((query) => {
+            if (!Array.isArray(query.tags)) {
+              return false;
+            }
+            return true;
+          })
+          .reply(200, outData);
+
+        out.on('data', (data) => {
+          chai.expect(mock.isDone());
+          chai.expect(data.status).to.equal(200);
+          chai.expect(data.body).to.eql(outData);
+          done();
+        });
+        error.on('data', done);
+        tags.send(inTags);
+      });
     });
   });
   describe('AddPet component', () => {
