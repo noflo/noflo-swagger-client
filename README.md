@@ -27,7 +27,20 @@ This would generate a component for each [Swagger pet store](https://petstore3.s
 
 ## Usage as a library
 
-TODO
+It is also possible to use noflo-swagger-client as a library, registering NoFlo components programmatically. This is useful for example when utilizing [noflo-nodejs as a library](https://github.com/noflo/noflo-nodejs#embedding-runtime-in-an-existing-service).
+
+```javascript
+const loader = new noflo.ComponentLoader(process.cwd());
+const def = {
+  url: 'http://petstore.swagger.io/v2/swagger.json',
+};
+loader.listComponents(() => {
+  registerSwaggerComponents(loader, 'petstore', def))
+    .then(() => {
+      console.log('Components registered!');
+    });
+});
+```
 
 ## Changes
 
