@@ -68,7 +68,7 @@ These components will only contain `in` and `out` ports. The key `parameter` of 
 
 ## Changes
 
-* 0.2.0 (git master)
+* 0.2.0 (2020-09-15)
   - Added support for generating [NoFlo Assembly Line](https://github.com/noflo/noflo-assembly/wiki) components
 * 0.1.1 (2020-09-11)
  - Improved test coverage
