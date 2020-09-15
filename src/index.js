@@ -1,6 +1,7 @@
 const swaggerClient = require('swagger-client');
 const slug = require('slug');
 const ApiComponent = require('./ApiComponent');
+const AssemblyComponent = require('./AssemblyComponent');
 
 function getDefinitionForMethod(client, tag, method) {
   let def = null;
@@ -30,11 +31,12 @@ function createNamespace(prefix) {
   return slug(prefix);
 }
 
-function registerComponentsForTag(loader, namespace, tag, client) {
+function registerComponentsForTag(loader, namespace, tag, client, assembly = false) {
   return Promise.all(Object.keys(client.apis[tag]).map((apiMethod) => {
     const definition = getDefinitionForMethod(client, tag, apiMethod);
     const implementation = client.apis[tag][apiMethod];
-    const component = ApiComponent(implementation, definition);
+    const componentFactory = assembly ? AssemblyComponent : ApiComponent;
+    const component = componentFactory(implementation, definition);
     const componentName = apiMethod.charAt(0).toUpperCase() + apiMethod.slice(1);
     return new Promise((resolve, reject) => {
       loader.registerComponent(createNamespace(namespace, tag), componentName, component, (err) => {
@@ -53,7 +55,7 @@ function registerSwaggerComponents(loader, namespace, definition) {
   return swaggerClient(definition)
     .then((client) => Promise.all(
       Object.keys(client.apis).map(
-        (tag) => registerComponentsForTag(loader, namespace, tag, client),
+        (tag) => registerComponentsForTag(loader, namespace, tag, client, definition.assembly),
       ),
     ));
 }

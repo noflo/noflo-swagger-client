@@ -27,11 +27,50 @@ This would generate a component for each [Swagger pet store](https://petstore3.s
 
 ## Usage as a library
 
-TODO
+It is also possible to use noflo-swagger-client as a library, registering NoFlo components programmatically. This is useful for example when utilizing [noflo-nodejs as a library](https://github.com/noflo/noflo-nodejs#embedding-runtime-in-an-existing-service).
+
+```javascript
+const loader = new noflo.ComponentLoader(process.cwd());
+const def = {
+  url: 'http://petstore.swagger.io/v2/swagger.json',
+};
+loader.listComponents(() => {
+  registerSwaggerComponents(loader, 'petstore', def))
+    .then(() => {
+      console.log('Components registered!');
+    });
+});
+```
+
+## Assembly line components
+
+This library can also create [NoFlo Assembly Line](https://github.com/noflo/noflo-assembly/wiki) compatible components. Just add `assembly: true` to the API definition parameters.
+
+In `package.json`:
+
+```json
+{
+  "dependencies": {
+    ...
+  },
+  "noflo": {
+    "swagger": {
+      "petstore": {
+        "url": "https://petstore3.swagger.io/api/v3/openapi.json",
+        "assembly": true
+      }
+    }
+  }
+}
+```
+
+These components will only contain `in` and `out` ports. The key `parameter` of the input message will be used as request parameters, and the API response will be written as the message parameter `response`. Error handling is handled using the [noflo-assembly conventions](https://github.com/noflo/noflo-assembly/wiki/Error-handling).
 
 ## Changes
 
-*.0.1.1 (2020-09-11)
+* 0.2.0 (git master)
+  - Added support for generating [NoFlo Assembly Line](https://github.com/noflo/noflo-assembly/wiki) components
+* 0.1.1 (2020-09-11)
  - Improved test coverage
 * 0.1.0 (2020-09-09)
   - Initial release

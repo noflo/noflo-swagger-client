@@ -23,8 +23,9 @@
   "homepage": "https://github.com/noflo/noflo-swagger-client#readme",
   "dependencies": {
     "noflo": "^1.0.0",
+    "noflo-assembly": "^0.2.0",
     "slug": "^3.3.4",
-    "swagger-client": "^3.10.12"
+    "swagger-client": "^3.10.13"
   },
   "devDependencies": {
     "chai": "^4.2.0",
