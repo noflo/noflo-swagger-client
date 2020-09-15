@@ -19,7 +19,7 @@ class AssemblyComponent extends Component {
           response,
         });
       }, (error) => {
-        output.sendDone(fail(error));
+        output.sendDone(fail(msg, error));
       });
   }
 }
