@@ -15,6 +15,7 @@ class AssemblyComponent extends Component {
       .then((response) => {
         output.sendDone({
           ...msg,
+          parameters: undefined,
           response,
         });
       }, (error) => {
