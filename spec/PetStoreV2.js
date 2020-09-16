@@ -5,6 +5,7 @@ describe('With PetStore OpenAPI v2 example', () => {
   const loader = new noflo.ComponentLoader(process.cwd());
   const def = {
     url: 'http://petstore.swagger.io/v2/swagger.json',
+    icon: 'cart-plus',
   };
   before((done) => loader.listComponents(done));
   describe('registering Swagger components', () => {
@@ -29,6 +30,9 @@ describe('With PetStore OpenAPI v2 example', () => {
       chai.expect(c.inPorts.tags).to.be.an('object');
       chai.expect(c.outPorts.out).to.be.an('object');
       chai.expect(c.outPorts.error).to.be.an('object');
+    });
+    it('should have the correct icon', () => {
+      chai.expect(c.getIcon()).to.equal('cart-plus');
     });
     describe('calling the API', () => {
       const tags = noflo.internalSocket.createSocket();
@@ -96,6 +100,9 @@ describe('With PetStore OpenAPI v2 example', () => {
       chai.expect(c.inPorts.status).to.be.an('object');
       chai.expect(c.outPorts.out).to.be.an('object');
       chai.expect(c.outPorts.error).to.be.an('object');
+    });
+    it('should have the correct icon', () => {
+      chai.expect(c.getIcon()).to.equal('cart-plus');
     });
     describe('calling the API', () => {
       const name = noflo.internalSocket.createSocket();

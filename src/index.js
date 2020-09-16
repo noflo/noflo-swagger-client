@@ -57,12 +57,12 @@ function createNamespace(prefix) {
   return slug(prefix);
 }
 
-function registerComponentsForTag(loader, namespace, tag, client, assembly = false) {
+function registerComponentsForTag(loader, namespace, tag, client, assembly = false, icon = null) {
   return Promise.all(Object.keys(client.apis[tag]).map((apiMethod) => {
     const definition = getDefinitionForMethod(client, tag, apiMethod);
     const implementation = client.apis[tag][apiMethod];
     const componentFactory = assembly ? AssemblyComponent : ApiComponent;
-    const component = componentFactory(implementation, definition);
+    const component = componentFactory(implementation, definition, icon);
     const componentName = apiMethod.charAt(0).toUpperCase() + apiMethod.slice(1);
     return new Promise((resolve, reject) => {
       loader.registerComponent(createNamespace(namespace, tag), componentName, component, (err) => {
@@ -82,7 +82,14 @@ function registerSwaggerComponents(loader, namespace, definition) {
     .then((client) => populateAuthorizations(namespace, client))
     .then((client) => Promise.all(
       Object.keys(client.apis).map(
-        (tag) => registerComponentsForTag(loader, namespace, tag, client, definition.assembly),
+        (tag) => registerComponentsForTag(
+          loader,
+          namespace,
+          tag,
+          client,
+          definition.assembly,
+          definition.icon,
+        ),
       ),
     ));
 }
