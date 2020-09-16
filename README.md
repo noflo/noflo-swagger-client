@@ -75,7 +75,7 @@ For example to populate the API key to the pet store API used as example above, 
 
 ## Changes
 
-* 0.2.1 (git master)
+* 0.2.1 (2020-09-16)
   - Added support for populating authorization keys from environment variables
 * 0.2.0 (2020-09-15)
   - Added support for generating [NoFlo Assembly Line](https://github.com/noflo/noflo-assembly/wiki) components
