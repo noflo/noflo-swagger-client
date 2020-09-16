@@ -3,6 +3,32 @@ const slug = require('slug');
 const ApiComponent = require('./ApiComponent');
 const AssemblyComponent = require('./AssemblyComponent');
 
+function createEnvVar(namespace, key) {
+  return `SWAGGER_${slug(namespace).toUpperCase()}_${slug(key).toUpperCase()}`;
+}
+
+function populateAuthorizations(namespace, client) {
+  if (client.authorizations) {
+    // Authorizations already present, skip
+    return client;
+  }
+  if (!client.spec.securityDefinitions) {
+    return client;
+  }
+  const c = client;
+  Object.keys(client.spec.securityDefinitions).forEach((key) => {
+    const envVar = createEnvVar(namespace, key);
+    if (!process.env[envVar]) {
+      return;
+    }
+    if (!c.authorizations) {
+      c.authorizations = {};
+    }
+    c.authorizations[key] = process.env[envVar];
+  });
+  return client;
+}
+
 function getDefinitionForMethod(client, tag, method) {
   let def = null;
   Object.keys(client.spec.paths).forEach((path) => {
@@ -53,6 +79,7 @@ function registerComponentsForTag(loader, namespace, tag, client, assembly = fal
 function registerSwaggerComponents(loader, namespace, definition) {
   // TODO: Support for replacing authorizations with env var values
   return swaggerClient(definition)
+    .then((client) => populateAuthorizations(namespace, client))
     .then((client) => Promise.all(
       Object.keys(client.apis).map(
         (tag) => registerComponentsForTag(loader, namespace, tag, client, definition.assembly),
