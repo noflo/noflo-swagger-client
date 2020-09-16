@@ -66,8 +66,17 @@ In `package.json`:
 
 These components will only contain `in` and `out` ports. The key `parameter` of the input message will be used as request parameters, and the API response will be written as the message parameter `response`. Error handling is handled using the [noflo-assembly conventions](https://github.com/noflo/noflo-assembly/wiki/Error-handling).
 
+## Populating authorization data from environment variables
+
+In addition to [registering authorization keys](https://github.com/swagger-api/swagger-js/blob/2b950ee77f814069b9f1d92a422eeb56c47ac2b5/docs/migration/migration-2-x-to-3-x.md#authorizations) via the API definition passed to NoFlo Swagger Client initially, it can also be done via environment variables. This is especially useful when generating the components in the declarative way.
+
+The environment variables supported are formatted with `SWAGGER_<NAMESPACE>_<KEYNAME>`.
+For example to populate the API key to the pet store API used as example above, you'd set it with `SWAGGER_PETSTORE_APIKEY`. With this, all components needing API key authentication will set the `api_key` header to the value from the environment variable.
+
 ## Changes
 
+* 0.2.1 (git master)
+  - Added support for populating authorization keys from environment variables
 * 0.2.0 (2020-09-15)
   - Added support for generating [NoFlo Assembly Line](https://github.com/noflo/noflo-assembly/wiki) components
 * 0.1.1 (2020-09-11)
