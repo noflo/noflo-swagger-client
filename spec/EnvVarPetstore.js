@@ -21,7 +21,7 @@ describe('With env var replacement with PetStore OpenAPI v2', () => {
     };
     before((done) => loader.listComponents(done));
     before(() => registerSwaggerComponents(loader, 'petstore', def));
-    describe('FindPetsByTags component', () => {
+    describe('FindPetsByTags component (without security)', () => {
       let c;
       it('should be possible to load', (done) => {
         loader.load('petstore/FindPetsByTags', (err, instance) => {
@@ -78,6 +78,52 @@ describe('With env var replacement with PetStore OpenAPI v2', () => {
           });
           error.on('data', done);
           tags.send(inTags);
+        });
+      });
+    });
+    describe('GetInventory component (with security)', () => {
+      let c;
+      it('should be possible to load', (done) => {
+        loader.load('petstore/GetInventory', (err, instance) => {
+          if (err) {
+            done(err);
+            return;
+          }
+          c = instance;
+          done();
+        });
+      });
+      describe('calling the API', () => {
+        const ins = noflo.internalSocket.createSocket();
+        const out = noflo.internalSocket.createSocket();
+        const error = noflo.internalSocket.createSocket();
+        before(() => {
+          c.inPorts.in.attach(ins);
+          c.outPorts.out.attach(out);
+          c.outPorts.error.attach(error);
+        });
+        after(() => {
+          c.inPorts.in.detach(ins);
+          c.outPorts.out.detach(out);
+          c.outPorts.error.detach(error);
+          nock.cleanAll();
+        });
+        it('should set the APIkey header', (done) => {
+          const mock = nock('https://petstore.swagger.io', {
+            badheaders: ['api_key'],
+          })
+            .get('/v2/store/inventory')
+            .reply(401);
+
+          out.on('data', () => {
+            done(new Error('Received unexpected 200'));
+          });
+          error.on('data', (err) => {
+            chai.expect(err.status).to.equal(401);
+            chai.expect(mock.isDone());
+            done();
+          });
+          ins.send(true);
         });
       });
     });
