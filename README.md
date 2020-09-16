@@ -79,7 +79,7 @@ Custom icon can be set for a library by adding an `icon` key to the definition.
 
 ## Changes
 
-* 0.2.2 (git master)
+* 0.2.2 (2020-09-16)
   - Added custom icon support
 * 0.2.1 (2020-09-16)
   - Added support for populating authorization keys from environment variables
