@@ -6,6 +6,7 @@ describe('With Assembly components for PetStore OpenAPI v2', () => {
   const def = {
     url: 'http://petstore.swagger.io/v2/swagger.json',
     assembly: true,
+    icon: 'cart-arrow-down',
   };
   before((done) => loader.listComponents(done));
   describe('registering Swagger assembly components', () => {
@@ -29,6 +30,9 @@ describe('With Assembly components for PetStore OpenAPI v2', () => {
     it('should have the expected ports', () => {
       chai.expect(c.inPorts.in).to.be.an('object');
       chai.expect(c.outPorts.out).to.be.an('object');
+    });
+    it('should have the correct icon', () => {
+      chai.expect(c.getIcon()).to.equal('cart-arrow-down');
     });
     describe('calling the API', () => {
       const ins = noflo.internalSocket.createSocket();

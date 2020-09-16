@@ -30,6 +30,9 @@ describe('With PetStore OpenAPI v3 example', () => {
       chai.expect(c.outPorts.out).to.be.an('object');
       chai.expect(c.outPorts.error).to.be.an('object');
     });
+    it('should have the correct icon', () => {
+      chai.expect(c.getIcon()).to.equal('gear');
+    });
     describe('calling the API', () => {
       const tags = noflo.internalSocket.createSocket();
       const out = noflo.internalSocket.createSocket();

@@ -2,8 +2,9 @@ const { Component } = require('noflo');
 const slug = require('slug');
 const { parameterToNoFlo } = require('./schemaHelpers');
 
-function createBasicComponent(method, definition) {
+function createBasicComponent(method, definition, icon) {
   const c = new Component();
+  c.icon = icon;
   if (definition) {
     c.description = definition.summary || definition.description;
     c.inPorts.add('in', {
@@ -35,8 +36,9 @@ function createBasicComponent(method, definition) {
   });
 }
 
-function createQueryComponent(method, definition) {
+function createQueryComponent(method, definition, icon) {
   const c = new Component();
+  c.icon = icon;
   c.description = definition.summary || definition.description;
   const portToParam = {};
   let usesBody = false;
@@ -102,8 +104,9 @@ function createQueryComponent(method, definition) {
   });
 }
 
-function createBodyComponent(method, definition) {
+function createBodyComponent(method, definition, icon) {
   const c = new Component();
+  c.icon = icon;
   c.description = definition.summary || definition.description;
   const portToParam = {};
   const bodyType = Object.keys(definition.requestBody.content)[0];
@@ -152,16 +155,16 @@ function createBodyComponent(method, definition) {
   });
 }
 
-function createComponent(method, definition = null) {
+function createComponent(method, definition = null, icon = null) {
   return () => {
     if (definition && definition.parameters && definition.parameters.length) {
-      return createQueryComponent(method, definition);
+      return createQueryComponent(method, definition, icon);
     }
     if (definition && definition.requestBody && definition.requestBody.content) {
-      return createBodyComponent(method, definition);
+      return createBodyComponent(method, definition, icon);
     }
     // Definition couldn't be found, create a very simple component
-    return createBasicComponent(method, definition);
+    return createBasicComponent(method, definition, icon);
   };
 }
 
