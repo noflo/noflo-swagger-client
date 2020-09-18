@@ -1,4 +1,4 @@
-noflo-swagger-client [![Build Status](https://travis-ci.org/noflo/noflo-swagger-client.svg?branch=master)](https://travis-ci.org/noflo/noflo-swagger-client)
+noflo-swagger-client
 ====================
 
 This library can be used for generating NoFlo components for accessing any REST API described by [Swagger/OpenAPI](https://swagger.io). Each API method will get its own component, with the top-level parameters becoming separate inports.
