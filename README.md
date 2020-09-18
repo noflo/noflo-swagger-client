@@ -86,6 +86,6 @@ Custom icon can be set for a library by adding an `icon` key to the definition.
 * 0.2.0 (2020-09-15)
   - Added support for generating [NoFlo Assembly Line](https://github.com/noflo/noflo-assembly/wiki) components
 * 0.1.1 (2020-09-11)
- - Improved test coverage
+  - Improved test coverage
 * 0.1.0 (2020-09-09)
   - Initial release
