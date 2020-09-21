@@ -79,6 +79,8 @@ Custom icon can be set for a library by adding an `icon` key to the definition.
 
 ## Changes
 
+* 0.2.3 (2020-09-21)
+  - Added safety to Assembly components in case there is no definition for an API route
 * 0.2.2 (2020-09-16)
   - Added custom icon support
 * 0.2.1 (2020-09-16)

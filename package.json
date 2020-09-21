@@ -1,6 +1,6 @@
 {
   "name": "noflo-swagger-client",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Generate NoFlo components from Swagger/OpenAPI definitions",
   "main": "src/index.js",
   "scripts": {
