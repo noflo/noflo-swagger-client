@@ -2,8 +2,9 @@ const { default: Component, fail } = require('noflo-assembly');
 
 class AssemblyComponent extends Component {
   constructor(apiMethod, definition, icon) {
+    const def = definition || {};
     super({
-      description: definition.summary || definition.description,
+      description: def.summary || def.description,
       icon,
       // TODO: Set up validators from JSON Schema
     });
