@@ -137,7 +137,7 @@ describe('With env var replacement with PetStore OpenAPI v2', () => {
     before(() => {
       process.env.SWAGGER_PETSTORE_APIKEY = secret;
     });
-    before((done) => loader.listComponents(done));
+    before(() => loader.listComponents());
     before(() => registerSwaggerComponents(loader, 'petstore', def));
     describe('FindPetsByTags component (without security)', () => {
       let c;
