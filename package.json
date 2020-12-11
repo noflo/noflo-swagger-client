@@ -24,7 +24,7 @@
   "homepage": "https://github.com/noflo/noflo-swagger-client#readme",
   "dependencies": {
     "noflo": "^1.0.0",
-    "noflo-assembly": "^0.3.0",
+    "noflo-assembly": "^0.3.1",
     "slug": "^4.0.0",
     "swagger-client": "^3.10.13"
   },

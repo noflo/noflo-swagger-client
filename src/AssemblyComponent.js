@@ -1,4 +1,4 @@
-const { default: Component, fail } = require('noflo-assembly');
+const { Component, fail } = require('noflo-assembly');
 
 class AssemblyComponent extends Component {
   constructor(apiMethod, definition, icon) {
