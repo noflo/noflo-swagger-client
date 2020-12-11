@@ -6,7 +6,7 @@ describe('With PetStore OpenAPI v3 example', () => {
   const def = {
     url: 'https://petstore3.swagger.io/api/v3/openapi.json',
   };
-  before((done) => loader.listComponents(done));
+  before(() => loader.listComponents());
   describe('registering Swagger components', () => {
     before(() => registerSwaggerComponents(loader, 'petstore', def));
     it('should have registered components', () => {

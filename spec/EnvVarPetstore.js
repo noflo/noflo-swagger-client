@@ -19,7 +19,7 @@ describe('With env var replacement with PetStore OpenAPI v2', () => {
     const def = {
       url: 'http://petstore.swagger.io/v2/swagger.json',
     };
-    before((done) => loader.listComponents(done));
+    before(() => loader.listComponents());
     before(() => registerSwaggerComponents(loader, 'petstore', def));
     describe('FindPetsByTags component (without security)', () => {
       let c;

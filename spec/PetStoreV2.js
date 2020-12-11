@@ -7,7 +7,7 @@ describe('With PetStore OpenAPI v2 example', () => {
     url: 'http://petstore.swagger.io/v2/swagger.json',
     icon: 'cart-plus',
   };
-  before((done) => loader.listComponents(done));
+  before(() => loader.listComponents());
   describe('registering Swagger components', () => {
     before(() => registerSwaggerComponents(loader, 'petstore', def));
     it('should have registered components', () => {

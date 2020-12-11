@@ -8,7 +8,7 @@ describe('With Assembly components for PetStore OpenAPI v2', () => {
     assembly: true,
     icon: 'cart-arrow-down',
   };
-  before((done) => loader.listComponents(done));
+  before(() => loader.listComponents());
   describe('registering Swagger assembly components', () => {
     before(() => registerSwaggerComponents(loader, 'petstore', def));
     it('should have registered components', () => {
@@ -17,16 +17,11 @@ describe('With Assembly components for PetStore OpenAPI v2', () => {
   });
   describe('FindPetsByTags component', () => {
     let c;
-    it('should be possible to load', (done) => {
-      loader.load('petstore/FindPetsByTags', (err, instance) => {
-        if (err) {
-          done(err);
-          return;
-        }
+    it('should be possible to load', () => loader
+      .load('petstore/FindPetsByTags')
+      .then((instance) => {
         c = instance;
-        done();
-      });
-    });
+      }));
     it('should have the expected ports', () => {
       chai.expect(c.inPorts.in).to.be.an('object');
       chai.expect(c.outPorts.out).to.be.an('object');
