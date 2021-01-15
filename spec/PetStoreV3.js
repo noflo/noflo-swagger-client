@@ -15,16 +15,11 @@ describe('With PetStore OpenAPI v3 example', () => {
   });
   describe('FindPetsByTags component', () => {
     let c;
-    it('should be possible to load', (done) => {
-      loader.load('petstore/FindPetsByTags', (err, instance) => {
-        if (err) {
-          done(err);
-          return;
-        }
+    it('should be possible to load', () => loader
+      .load('petstore/FindPetsByTags')
+      .then((instance) => {
         c = instance;
-        done();
-      });
-    });
+      }));
     it('should have the expected ports', () => {
       chai.expect(c.inPorts.tags).to.be.an('object');
       chai.expect(c.outPorts.out).to.be.an('object');
@@ -81,16 +76,11 @@ describe('With PetStore OpenAPI v3 example', () => {
   });
   describe('AddPet component', () => {
     let c;
-    it('should be possible to load', (done) => {
-      loader.load('petstore/AddPet', (err, instance) => {
-        if (err) {
-          done(err);
-          return;
-        }
+    it('should be possible to load', () => loader
+      .load('petstore/AddPet')
+      .then((instance) => {
         c = instance;
-        done();
-      });
-    });
+      }));
     it('should have the expected ports', () => {
       chai.expect(c.inPorts.id).to.be.an('object');
       chai.expect(c.inPorts.name).to.be.an('object');

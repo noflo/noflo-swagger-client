@@ -78,16 +78,11 @@ describe('With Assembly components for PetStore OpenAPI v2', () => {
   });
   describe('AddPet component', () => {
     let c;
-    it('should be possible to load', (done) => {
-      loader.load('petstore/AddPet', (err, instance) => {
-        if (err) {
-          done(err);
-          return;
-        }
+    it('should be possible to load', () => loader
+      .load('petstore/AddPet')
+      .then((instance) => {
         c = instance;
-        done();
-      });
-    });
+      }));
     it('should have the expected ports', () => {
       chai.expect(c.inPorts.in).to.be.an('object');
       chai.expect(c.outPorts.out).to.be.an('object');
