@@ -2,6 +2,7 @@ const swaggerClient = require('swagger-client');
 const slug = require('slug');
 const ApiComponent = require('./ApiComponent');
 const AssemblyComponent = require('./AssemblyComponent');
+const loadfile = require('./loadfile');
 
 function createEnvVar(namespace, key) {
   return `SWAGGER_${slug(namespace).toUpperCase()}_${slug(key).toUpperCase()}`;
@@ -77,7 +78,14 @@ function registerComponentsForTag(loader, namespace, tag, client, assembly = fal
 }
 
 function registerSwaggerComponents(loader, namespace, definition) {
-  // TODO: Support for replacing authorizations with env var values
+  if (definition && definition.file) {
+    return loadfile(loader.baseDir, definition.file)
+      .then((spec) => registerSwaggerComponents(loader, namespace, {
+        ...definition,
+        file: undefined,
+        spec,
+      }));
+  }
   return swaggerClient(definition)
     .then((client) => populateAuthorizations(namespace, client))
     .then((client) => Promise.all(

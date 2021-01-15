@@ -1,14 +1,8 @@
-const path = require('path');
-const fs = require('fs');
-const { promisify } = require('util');
 const { registerSwaggerComponents } = require('./index');
-
-const readFile = promisify(fs.readFile);
+const loadfile = require('./loadfile');
 
 function readPackageDefinition(baseDir) {
-  const packageFile = path.resolve(baseDir, './package.json');
-  return readFile(packageFile, 'utf-8')
-    .then((contents) => JSON.parse(contents));
+  return loadfile(baseDir, './package.json');
 }
 
 /*
