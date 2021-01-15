@@ -83,6 +83,8 @@ Custom icon can be set for a library by adding an `icon` key to the definition.
 
 ## Changes
 
+* 0.4.0 (2021-01-15)
+  - Added support for loading Swagger definitions from local files
 * 0.3.0 (2020-12-11)
   - Updated for the latest noflo-assembly
 * 0.2.3 (2020-09-21)
