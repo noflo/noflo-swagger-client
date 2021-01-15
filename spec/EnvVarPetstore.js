@@ -23,16 +23,11 @@ describe('With env var replacement with PetStore OpenAPI v2', () => {
     before(() => registerSwaggerComponents(loader, 'petstore', def));
     describe('FindPetsByTags component (without security)', () => {
       let c;
-      it('should be possible to load', (done) => {
-        loader.load('petstore/FindPetsByTags', (err, instance) => {
-          if (err) {
-            done(err);
-            return;
-          }
+      it('should be possible to load', () => loader
+        .load('petstore/FindPetsByTags')
+        .then((instance) => {
           c = instance;
-          done();
-        });
-      });
+        }));
       describe('calling the API', () => {
         const tags = noflo.internalSocket.createSocket();
         const out = noflo.internalSocket.createSocket();
@@ -83,16 +78,11 @@ describe('With env var replacement with PetStore OpenAPI v2', () => {
     });
     describe('GetInventory component (with security)', () => {
       let c;
-      it('should be possible to load', (done) => {
-        loader.load('petstore/GetInventory', (err, instance) => {
-          if (err) {
-            done(err);
-            return;
-          }
+      it('should be possible to load', () => loader
+        .load('petstore/GetInventory')
+        .then((instance) => {
           c = instance;
-          done();
-        });
-      });
+        }));
       describe('calling the API', () => {
         const ins = noflo.internalSocket.createSocket();
         const out = noflo.internalSocket.createSocket();
@@ -141,16 +131,11 @@ describe('With env var replacement with PetStore OpenAPI v2', () => {
     before(() => registerSwaggerComponents(loader, 'petstore', def));
     describe('FindPetsByTags component (without security)', () => {
       let c;
-      it('should be possible to load', (done) => {
-        loader.load('petstore/FindPetsByTags', (err, instance) => {
-          if (err) {
-            done(err);
-            return;
-          }
+      it('should be possible to load', () => loader
+        .load('petstore/FindPetsByTags')
+        .then((instance) => {
           c = instance;
-          done();
-        });
-      });
+        }));
       describe('calling the API', () => {
         const tags = noflo.internalSocket.createSocket();
         const out = noflo.internalSocket.createSocket();
@@ -201,16 +186,11 @@ describe('With env var replacement with PetStore OpenAPI v2', () => {
     });
     describe('GetInventory component (with security)', () => {
       let c;
-      it('should be possible to load', (done) => {
-        loader.load('petstore/GetInventory', (err, instance) => {
-          if (err) {
-            done(err);
-            return;
-          }
+      it('should be possible to load', () => loader
+        .load('petstore/GetInventory')
+        .then((instance) => {
           c = instance;
-          done();
-        });
-      });
+        }));
       describe('calling the API', () => {
         const ins = noflo.internalSocket.createSocket();
         const out = noflo.internalSocket.createSocket();
