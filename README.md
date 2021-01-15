@@ -73,6 +73,10 @@ In addition to [registering authorization keys](https://github.com/swagger-api/s
 The environment variables supported are formatted with `SWAGGER_<NAMESPACE>_<KEYNAME>`.
 For example to populate the API key to the pet store API used as example above, you'd set it with `SWAGGER_PETSTORE_APIKEY`. With this, all components needing API key authentication will set the `api_key` header to the value from the environment variable.
 
+## Loading Swagger definitions from the file system
+
+By default the Swagger definitions are requested from their supplied URL. It is however possible to pass a local file instead by giving its path via the `file` parameter, replacing the normal `url` parameter.
+
 ## Component icons
 
 Custom icon can be set for a library by adding an `icon` key to the definition.
