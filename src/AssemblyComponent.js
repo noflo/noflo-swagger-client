@@ -13,16 +13,23 @@ class AssemblyComponent extends Component {
   }
 
   relay(msg, output) {
-    this.apiMethod(msg.parameters)
-      .then((response) => {
-        output.sendDone({
-          ...msg,
-          parameters: undefined,
-          response,
-        });
-      }, (error) => {
-        output.sendDone(fail(msg, error));
+    this.apiMethod(
+      msg.parameters,
+      // With OpenAPI 3, a request body is no longer read from parameters.body but from the second
+      // parameter (value of key requestBody). That parameter is used with default value {} for
+      // OpenAPI 2.
+      // See: https://github.com/swagger-api/swagger-js/blob/master/docs/usage/tags-interface.md#openapi-v3x
+      msg.parameters !== undefined && Object.keys(msg.parameters).find((key) => key === 'body')
+        ? { requestBody: msg.parameters.body } : {},
+    ).then((response) => {
+      output.sendDone({
+        ...msg,
+        parameters: undefined,
+        response,
       });
+    }, (error) => {
+      output.sendDone(fail(msg, error));
+    });
   }
 }
 

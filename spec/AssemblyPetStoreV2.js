@@ -102,9 +102,7 @@ describe('With Assembly components for PetStore OpenAPI v2', () => {
       it('should make a HTTP POST', (done) => {
         const mock = nock('https://petstore.swagger.io')
           .post('/v2/pet', (body) => {
-            if (body.name !== 'Musti') {
-              return false;
-            }
+            chai.expect(body.name).to.equal('Musti');
             return true;
           })
           .reply(200);
